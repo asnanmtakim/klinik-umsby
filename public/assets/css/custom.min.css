@@ -1,0 +1,101 @@
+.auth-one-bg {
+   background-image: url(../images/bg-login.jpg);
+}
+
+.error-validation {
+   width: 100%;
+   margin-top: 0.25rem;
+   font-size: 0.875em;
+   color: #f06548;
+}
+
+.choices {
+   margin-bottom: 0px;
+}
+
+.choices__placeholder {
+   color: var(--vz-card-color) !important;
+}
+
+#loading-ajax {
+   display: none;
+   position: fixed;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+   background-color: rgba(255, 255, 255, 0.5);
+   z-index: 9999;
+}
+
+/* Home Page Layout & Presentation Styles */
+.hero-info-card-top {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    z-index: 10;
+}
+
+.hero-info-card-bottom {
+    position: absolute;
+    bottom: 30px;
+    right: -10px;
+    z-index: 10;
+    width: 220px;
+}
+
+.hero-profile-img {
+    z-index: 1;
+    filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.1));
+}
+
+.logo-circle-container {
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-circle-img {
+    max-height: 280px;
+    object-fit: contain;
+    filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.08));
+}
+
+.logo-placeholder-avatar {
+    width: 260px;
+    height: 260px;
+    font-size: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.warning-alert-avatar {
+    font-size: 32px;
+    box-shadow: 0 8px 20px rgba(243, 156, 18, 0.2);
+}
+
+.warning-alert-text {
+    max-width: 420px;
+    line-height: 1.6;
+}
+
+.gelombang-card-desc {
+    min-height: 54px;
+}
+
+.dresscode-img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.dresscode-badge-card {
+    position: absolute;
+    bottom: -30px;
+    left: -20px;
+    width: 220px;
+    z-index: 10;
+}
+
