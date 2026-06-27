@@ -30,12 +30,20 @@ Data Pendaftar Baksos
             </div>
         </div>
         <!-- end page title -->
-        
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h5 class="card-title mb-0 flex-grow-1">Daftar Warga Terdaftar Baksos</h5>
+                        <div class="flex-shrink-0">
+                            <select class="form-select form-select-sm" id="filter_service">
+                                <option value="">Semua Layanan</option>
+                                <?php foreach ($services as $service) : ?>
+                                    <option value="<?= $service['id'] ?>"><?= esc($service['nama_pelayanan']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

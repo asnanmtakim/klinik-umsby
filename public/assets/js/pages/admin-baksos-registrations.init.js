@@ -19,6 +19,7 @@ $(document).ready(function () {
          type: "POST",
          data: function (d) {
             d[csrfToken] = csrfHash;
+            d.baksos_service_id = $("#filter_service").val();
          }
       },
       order: [],
@@ -31,6 +32,10 @@ $(document).ready(function () {
          { data: "created_at" },
          { data: "action", orderable: !1 },
       ],
+   });
+
+   $("#filter_service").on("change", function () {
+      tbData.ajax.reload();
    });
 });
 

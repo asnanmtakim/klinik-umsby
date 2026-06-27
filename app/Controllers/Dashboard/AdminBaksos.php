@@ -100,7 +100,7 @@ class AdminBaksos extends BaseController
             return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successAdd')]);
         } else {
             $baksosServiceModel->update($id, $data);
-            return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successUpdate')]);
+            return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successUpdateData')]);
         }
     }
 
@@ -115,7 +115,7 @@ class AdminBaksos extends BaseController
         }
 
         $baksosServiceModel->delete($id);
-        return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successDelete')]);
+        return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successDeleteData')]);
     }
 
     // ==========================================
@@ -123,6 +123,9 @@ class AdminBaksos extends BaseController
     // ==========================================
     public function registrations()
     {
+        $baksosServiceModel = new BaksosServiceModel();
+        $this->dataView['services'] = $baksosServiceModel->findAll();
+
         return view('dashboard/baksos/registrations', $this->dataView);
     }
 
@@ -134,7 +137,11 @@ class AdminBaksos extends BaseController
             ->join('baksos_services s', 's.id = r.baksos_service_id', 'left');
 
         return DataTable::of($builder)
-            ->filter(function ($builder, $request) {})
+            ->filter(function ($builder, $request) {
+                if (isset($request->baksos_service_id) && $request->baksos_service_id != "") {
+                    $builder->where('r.baksos_service_id', $request->baksos_service_id);
+                }
+            })
             ->postQuery(function ($builder) {
                 $builder->orderBy('r.created_at', 'DESC');
             })
@@ -160,6 +167,6 @@ class AdminBaksos extends BaseController
         }
 
         $baksosRegistrationModel->delete($id);
-        return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successDelete')]);
+        return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successDeleteData')]);
     }
 }
