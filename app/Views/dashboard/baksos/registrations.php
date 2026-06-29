@@ -53,6 +53,9 @@ Data Pendaftar Baksos
                                         <th>#</th>
                                         <th>Nama Lengkap</th>
                                         <th>NIK</th>
+                                        <th>Umur</th>
+                                        <th>Jenis Kelamin</th>
+                                        <th>Alamat</th>
                                         <th>No HP</th>
                                         <th>Layanan Baksos</th>
                                         <th>Waktu Daftar</th>

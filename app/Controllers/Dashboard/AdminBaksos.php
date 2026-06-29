@@ -133,7 +133,7 @@ class AdminBaksos extends BaseController
     {
         $db = \Config\Database::connect();
         $builder = $db->table('baksos_registrations r')
-            ->select('r.id, r.nama_lengkap, r.nik, r.no_hp, r.created_at, s.nama_pelayanan')
+            ->select('r.id, r.nama_lengkap, r.nik, r.umur, r.jenis_kelamin, r.alamat, r.no_hp, r.created_at, s.nama_pelayanan')
             ->join('baksos_services s', 's.id = r.baksos_service_id', 'left');
 
         return DataTable::of($builder)
