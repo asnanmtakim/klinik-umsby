@@ -12,11 +12,16 @@ class Baksos extends BaseController
     {
         $serviceModel = new BaksosServiceModel();
         $data['services'] = $serviceModel->getServicesWithRemainingQuota();
+        $data['is_closed'] = (date('Y-m-d') > '2026-07-01');
         return view('baksos/register', $data);
     }
 
     public function store()
     {
+        if (date('Y-m-d') > '2026-07-01') {
+            return redirect()->back()->with('error', 'Mohon maaf, pendaftaran Bakti Sosial telah ditutup.');
+        }
+
         $validationRules = [
             'nama_lengkap' => 'required|max_length[150]',
             'nik'          => [
@@ -27,7 +32,7 @@ class Baksos extends BaseController
                 ]
             ],
             'umur'         => 'required|is_natural_no_zero',
-            'jenis_kelamin'=> 'required|in_list[L,P]',
+            'jenis_kelamin' => 'required|in_list[L,P]',
             'no_hp'        => 'required|max_length[20]',
             'alamat'       => 'required',
             'service_id'   => 'required|is_natural_no_zero'
