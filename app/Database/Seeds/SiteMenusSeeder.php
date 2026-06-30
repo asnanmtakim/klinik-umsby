@@ -117,7 +117,7 @@ class SiteMenusSeeder extends Seeder
                 'filter' => 'session',
                 'filter_value' => null,
                 'order' => 6,
-                'active' => 1,
+                'active' => 0,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
