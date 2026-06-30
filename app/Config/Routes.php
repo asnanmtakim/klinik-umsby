@@ -26,6 +26,7 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard', 'filter
 
     $routes->get('baksos/registrations', 'AdminBaksos::registrations', ['as' => 'admin-baksos-registrations']);
     $routes->post('baksos/registrations/all', 'AdminBaksos::registrationsAll', ['as' => 'admin-baksos-registrations-all']);
+    $routes->get('baksos/registrations/export', 'AdminBaksos::registrationsExport', ['as' => 'admin-baksos-registrations-export']);
     $routes->post('baksos/registrations/delete', 'AdminBaksos::registrationsDelete', ['as' => 'admin-baksos-registrations-delete']);
 
     // Admin > Settings

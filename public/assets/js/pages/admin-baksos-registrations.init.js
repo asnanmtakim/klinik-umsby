@@ -40,8 +40,12 @@ $(document).ready(function () {
    $("#filter_service").on("change", function () {
       tbData.ajax.reload();
    });
+   $("#btn-export").on("click", function () {
+      let url = $(this).attr("data-url");
+      let serviceId = $("#filter_service").val();
+      window.location.href = url + "?baksos_service_id=" + serviceId;
+   });
 });
-
 // Handle Delete Button Click
 $(document)
    .off("click", "button.action-delete")

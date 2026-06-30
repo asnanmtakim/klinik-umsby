@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\BaksosServiceModel;
 use App\Models\BaksosRegistrationModel;
 use Hermawan\DataTables\DataTable;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class AdminBaksos extends BaseController
 {
@@ -168,5 +170,67 @@ class AdminBaksos extends BaseController
 
         $baksosRegistrationModel->delete($id);
         return $this->response->setJSON(['status' => 200, 'pesan' => lang('App.dashboard.successDeleteData')]);
+    }
+
+    public function registrationsExport()
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('baksos_registrations r')
+            ->select('r.nama_lengkap, r.nik, r.umur, r.jenis_kelamin, r.alamat, r.no_hp, r.created_at, s.nama_pelayanan')
+            ->join('baksos_services s', 's.id = r.baksos_service_id', 'left');
+
+        $serviceId = $this->request->getGet('baksos_service_id');
+        if (!empty($serviceId)) {
+            $builder->where('r.baksos_service_id', $serviceId);
+        }
+
+        $builder->orderBy('r.created_at', 'DESC');
+        $data = $builder->get()->getResult();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Header
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Nama Lengkap');
+        $sheet->setCellValue('C1', 'NIK');
+        $sheet->setCellValue('D1', 'Umur');
+        $sheet->setCellValue('E1', 'Jenis Kelamin');
+        $sheet->setCellValue('F1', 'Alamat');
+        $sheet->setCellValue('G1', 'No HP');
+        $sheet->setCellValue('H1', 'Layanan Baksos');
+        $sheet->setCellValue('I1', 'Waktu Daftar');
+
+        $row = 2;
+        $no = 1;
+        foreach ($data as $item) {
+            $sheet->setCellValue('A' . $row, $no);
+            $sheet->setCellValue('B' . $row, $item->nama_lengkap);
+            // using string format for NIK & No HP to prevent scientific notation
+            $sheet->setCellValueExplicit('C' . $row, $item->nik, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('D' . $row, $item->umur);
+            $sheet->setCellValue('E' . $row, $item->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan');
+            $sheet->setCellValue('F' . $row, $item->alamat);
+            $sheet->setCellValueExplicit('G' . $row, $item->no_hp, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+            $sheet->setCellValue('H' . $row, $item->nama_pelayanan);
+            $sheet->setCellValue('I' . $row, date('d M Y H:i', strtotime($item->created_at)));
+            $row++;
+            $no++;
+        }
+
+        // Auto size columns
+        foreach (range('A', 'I') as $columnID) {
+            $sheet->getColumnDimension($columnID)->setAutoSize(true);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Data_Pendaftar_Baksos_' . date('YmdHis') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+        
+        $writer->save('php://output');
+        exit;
     }
 }

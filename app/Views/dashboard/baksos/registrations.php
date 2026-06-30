@@ -36,13 +36,16 @@ Data Pendaftar Baksos
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
                         <h5 class="card-title mb-0 flex-grow-1">Daftar Warga Terdaftar Baksos</h5>
-                        <div class="flex-shrink-0">
-                            <select class="form-select form-select-sm" id="filter_service">
+                        <div class="flex-shrink-0 d-flex gap-2">
+                            <select class="form-select form-select-sm w-auto" id="filter_service">
                                 <option value="">Semua Layanan</option>
                                 <?php foreach ($services as $service) : ?>
                                     <option value="<?= $service['id'] ?>"><?= esc($service['nama_pelayanan']) ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <button type="button" class="btn btn-success btn-sm" id="btn-export" data-url="<?= url_to('admin-baksos-registrations-export'); ?>">
+                                <i class="ri-file-excel-2-line align-bottom me-1"></i> Export Excel
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
